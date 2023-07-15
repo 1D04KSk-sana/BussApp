@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
@@ -14,9 +17,6 @@ class _StartPageState extends State<StartPage> {
 
   late GoogleMapController mapController;
 
-  final LatLng _center = const LatLng(45.521563, -122.677433);
-  final LatLng top = const LatLng(45, -122.67);
-
   final Set<Polyline> _polyline = {};
 
   // 大手町
@@ -25,7 +25,12 @@ class _StartPageState extends State<StartPage> {
   final LatLng destination =
       const LatLng(34.73302146707623, 135.55713263824782);
 
+  int moguleCount = 0;
   int count = 0;
+
+  final _startPoints = [
+    const LatLng(34.70263531930244, 135.49718441206556),
+  ];
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
@@ -39,7 +44,7 @@ class _StartPageState extends State<StartPage> {
 
 // ルート表示データ取得
   Future<void> _getRoutes() async {
-    List<LatLng> _points = await _createPolyline();
+    List<LatLng> _points = await _createPolyline(count);
     setState(() {
       _polyline.add(Polyline(
           polylineId: const PolylineId("Route"),
@@ -57,30 +62,19 @@ class _StartPageState extends State<StartPage> {
     Maps = GoogleMap(
       mapType: MapType.normal,
       onMapCreated: _onMapCreated,
-      initialCameraPosition: CameraPosition(target: _center, zoom: 9),
+      initialCameraPosition: CameraPosition(target: start, zoom: 9),
     );
 
-    if (count == 1) {
+    if (moguleCount == 1) {
       Maps = GoogleMap(
           mapType: MapType.normal,
           onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(target: _center, zoom: 9),
+          initialCameraPosition: CameraPosition(target: start, zoom: 9),
           polylines: _polyline,
           markers: {
-            Marker(markerId: const MarkerId("origin"), position: start),
             Marker(
-                markerId: const MarkerId("destination"), position: destination)
-          });
-    }
-
-    if (count == 2) {
-      Maps = GoogleMap(
-          mapType: MapType.normal,
-          onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(target: _center, zoom: 9),
-          polylines: _polyline,
-          markers: {
-            Marker(markerId: const MarkerId("origin"), position: start),
+                markerId: const MarkerId("origin"),
+                position: _startPoints[count]),
             Marker(
                 markerId: const MarkerId("destination"), position: destination)
           });
@@ -90,24 +84,16 @@ class _StartPageState extends State<StartPage> {
   }
 
   // ルート表示
-  Future<List<LatLng>> _createPolyline() async {
+  Future<List<LatLng>> _createPolyline(int count) async {
     List<LatLng> polylineCoordinates = [];
     PolylinePoints polylinePoints = PolylinePoints();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       API_KYE,
-      PointLatLng(start.latitude, start.longitude),
+      PointLatLng(
+          _startPoints[count - 1].latitude, _startPoints[count - 1].longitude),
       PointLatLng(destination.latitude, destination.longitude),
+      travelMode: TravelMode.walking,
     );
-
-    if (count == 2) {
-      polylineCoordinates.clear();
-      PolylinePoints polylinePoints = PolylinePoints();
-      PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        API_KYE,
-        PointLatLng(start.latitude, start.longitude),
-        PointLatLng(destination.latitude, destination.longitude),
-      );
-    }
 
     if (result.points.isNotEmpty) {
       result.points.forEach((PointLatLng point) {
@@ -125,10 +111,7 @@ class _StartPageState extends State<StartPage> {
       ),
       body: Stack(
         children: <Widget>[
-          GoogleMap(
-            onMapCreated: _onMapCreated,
-            initialCameraPosition: CameraPosition(target: _center, zoom: 18.0),
-          ),
+          _createMap(),
           SafeArea(
               child: Align(
             alignment: Alignment.centerRight,
@@ -188,20 +171,13 @@ class _StartPageState extends State<StartPage> {
                       BoxDecoration(color: Colors.green.withOpacity(0.8)),
                   child: const Text('メニュー'),
                 )),
-            TextField(
-                decoration: InputDecoration(
-                    labelText: 'aaa',
-                    hintText: 'bbb',
-                    icon: Icon(Icons.search)),
-                autocorrect: false,
-                autofocus: true,
-                keyboardType: TextInputType.text),
             ListTile(
               title: Text("72番線"),
               trailing: Icon(Icons.arrow_forward),
               onTap: () {
                 setState(() {
-                  count = count + 1;
+                  moguleCount = 1;
+                  count = 1;
                 });
               },
             ),
