@@ -66,6 +66,19 @@ class _StartPageState extends State<StartPage> {
     });
   }
 
+  Set<Marker> SetMarkerPoints() {
+    Set<Marker> setMarkers = {};
+
+    setMarkers.add(
+      Marker(
+        markerId: MarkerId("aaa"),
+        position: LatLng(0, 0),
+      ),
+    );
+
+    return setMarkers;
+  }
+
   // マップの作成
   Widget _createMap() {
     Widget Maps;
