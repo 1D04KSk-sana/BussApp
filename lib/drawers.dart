@@ -38,70 +38,6 @@ class _StartPageState extends State<StartPage> {
 
   late List<String> startDestinationName = [];
 
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-// ルート表示データ取得
-  Future<void> _getRoutes(int count) async {
-    _creatPolylines();
-    List<LatLng> _points = [];
-    _points = await _createPolyline(count);
-    setState(() {
-      _polyline.add(Polyline(
-          polylineId: const PolylineId("Route"),
-          visible: true,
-          color: Colors.blue,
-          width: 5,
-          points: _points));
-    });
-  }
-
-  // マップの作成
-  Widget _createMap() {
-    Widget Maps;
-
-    Maps = GoogleMap(
-      mapType: MapType.normal,
-      onMapCreated: _onMapCreated,
-      zoomControlsEnabled: false,
-      initialCameraPosition: CameraPosition(
-        target: start,
-        zoom: 13,
-      ),
-      minMaxZoomPreference: MinMaxZoomPreference(11, 20),
-    );
-
-    if (moguleCount == 1) {
-      Maps = GoogleMap(
-        mapType: MapType.normal,
-        onMapCreated: _onMapCreated,
-        initialCameraPosition: CameraPosition(target: start, zoom: 13),
-        zoomControlsEnabled: false,
-        polylines: _polyline,
-        markers: {
-          Marker(
-            markerId: const MarkerId("origin"),
-            position: startPoints[count],
-            infoWindow: InfoWindow(title: startDestinationName[0]),
-          ),
-          Marker(
-              markerId: const MarkerId("destination"),
-              position: destinationPoints[count],
-              infoWindow: InfoWindow(title: startDestinationName[1]))
-        },
-        minMaxZoomPreference: MinMaxZoomPreference(11, 20),
-      );
-    }
-
-    return Maps;
-  }
-
   //ドロワーの作成
   Widget _createDrawer() {
     Widget drawers;
@@ -291,63 +227,7 @@ class _StartPageState extends State<StartPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('バス停マップ'),
-      ),
-      body: Stack(
-        children: <Widget>[
-          _createMap(),
-          SafeArea(
-              child: Align(
-            alignment: Alignment.centerRight,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 10.0, bottom: 100.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  ClipOval(
-                    child: Material(
-                      color: Colors.green.shade100,
-                      child: InkWell(
-                        splashColor: Colors.green,
-                        child: SizedBox(
-                          width: 50,
-                          height: 50,
-                          child: Icon(Icons.add),
-                        ),
-                        onTap: () {
-                          mapController.animateCamera(CameraUpdate.zoomIn());
-                        },
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ClipOval(
-                    child: Material(
-                      color: Colors.green.shade100,
-                      child: InkWell(
-                        splashColor: Colors.green,
-                        child: SizedBox(
-                          width: 50.0,
-                          height: 50.0,
-                          child: Icon(Icons.remove),
-                        ),
-                        onTap: () {
-                          mapController.animateCamera(CameraUpdate.zoomOut());
-                        },
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ))
-        ],
-      ),
+    return 
       drawer: _createDrawer(),
-    );
   }
 }
