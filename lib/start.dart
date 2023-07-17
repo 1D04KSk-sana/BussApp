@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import './number.dart';
+import './name.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({Key? key}) : super(key: key);
@@ -18,6 +19,7 @@ class _StartPageState extends State<StartPage> {
   final Set<Polyline> _polyline = {};
 
   Number number = Number();
+  Name name = Name();
 
   _creatPolylines() {
     _polyline.clear();
@@ -33,6 +35,8 @@ class _StartPageState extends State<StartPage> {
   late List<LatLng> startPoints = number.startLatLang();
 
   late List<LatLng> destinationPoints = number.destinationLatLng();
+
+  late List<String> startDestinationName = [];
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
@@ -65,27 +69,34 @@ class _StartPageState extends State<StartPage> {
     Maps = GoogleMap(
       mapType: MapType.normal,
       onMapCreated: _onMapCreated,
+      zoomControlsEnabled: false,
       initialCameraPosition: CameraPosition(
         target: start,
-        zoom: 11,
+        zoom: 13,
       ),
-      minMaxZoomPreference: MinMaxZoomPreference(9, 20),
+      minMaxZoomPreference: MinMaxZoomPreference(11, 20),
     );
 
     if (moguleCount == 1) {
       Maps = GoogleMap(
-          mapType: MapType.normal,
-          onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(target: start, zoom: 11),
-          polylines: _polyline,
-          markers: {
-            Marker(
-                markerId: const MarkerId("origin"),
-                position: startPoints[count]),
-            Marker(
-                markerId: const MarkerId("destination"),
-                position: destinationPoints[count])
-          });
+        mapType: MapType.normal,
+        onMapCreated: _onMapCreated,
+        initialCameraPosition: CameraPosition(target: start, zoom: 13),
+        zoomControlsEnabled: false,
+        polylines: _polyline,
+        markers: {
+          Marker(
+            markerId: const MarkerId("origin"),
+            position: startPoints[count],
+            infoWindow: InfoWindow(title: startDestinationName[0]),
+          ),
+          Marker(
+              markerId: const MarkerId("destination"),
+              position: destinationPoints[count],
+              infoWindow: InfoWindow(title: startDestinationName[1]))
+        },
+        minMaxZoomPreference: MinMaxZoomPreference(11, 20),
+      );
     }
 
     return Maps;
@@ -111,6 +122,7 @@ class _StartPageState extends State<StartPage> {
               count = 1;
               moguleCount = 1;
               drawerCount = 1;
+              startDestinationName = name.StartDestinationNameGet(count);
               _getRoutes(count);
               setState(() {});
             },
