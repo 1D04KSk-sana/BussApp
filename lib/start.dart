@@ -25,6 +25,10 @@ class _StartPageState extends State<StartPage> {
     _polyline.clear();
   }
 
+  _createNames() {
+    startDestinationName.clear();
+  }
+
   // 大手町
   final LatLng start = const LatLng(34.70263531930244, 135.49718441206556);
 
@@ -134,6 +138,7 @@ class _StartPageState extends State<StartPage> {
               count = 2;
               moguleCount = 1;
               drawerCount = 1;
+              startDestinationName = name.StartDestinationNameGet(count);
               _getRoutes(count);
               setState(() {});
             },
@@ -145,6 +150,7 @@ class _StartPageState extends State<StartPage> {
               count = 3;
               moguleCount = 1;
               drawerCount = 1;
+              startDestinationName = name.StartDestinationNameGet(count);
               _getRoutes(count);
               setState(() {});
             },
@@ -156,6 +162,7 @@ class _StartPageState extends State<StartPage> {
               count = 4;
               moguleCount = 1;
               drawerCount = 1;
+              startDestinationName = name.StartDestinationNameGet(count);
               _getRoutes(count);
               setState(() {});
             },
@@ -167,6 +174,7 @@ class _StartPageState extends State<StartPage> {
               count = 5;
               moguleCount = 1;
               drawerCount = 1;
+              startDestinationName = name.StartDestinationNameGet(count);
               _getRoutes(count);
               setState(() {});
             },
@@ -178,6 +186,7 @@ class _StartPageState extends State<StartPage> {
               count = 6;
               moguleCount = 1;
               drawerCount = 1;
+              startDestinationName = name.StartDestinationNameGet(count);
               _getRoutes(count);
               setState(() {});
             },
@@ -189,6 +198,7 @@ class _StartPageState extends State<StartPage> {
               count = 7;
               moguleCount = 1;
               drawerCount = 1;
+              startDestinationName = name.StartDestinationNameGet(count);
               _getRoutes(count);
               setState(() {});
             },
@@ -200,6 +210,7 @@ class _StartPageState extends State<StartPage> {
               count = 8;
               moguleCount = 1;
               drawerCount = 1;
+              startDestinationName = name.StartDestinationNameGet(count);
               _getRoutes(count);
               setState(() {});
             },
@@ -211,6 +222,7 @@ class _StartPageState extends State<StartPage> {
               count = 9;
               moguleCount = 1;
               drawerCount = 1;
+              startDestinationName = name.StartDestinationNameGet(count);
               _getRoutes(count);
               setState(() {});
             },
@@ -222,6 +234,7 @@ class _StartPageState extends State<StartPage> {
               count = 10;
               moguleCount = 1;
               drawerCount = 1;
+              startDestinationName = name.StartDestinationNameGet(count);
               _getRoutes(count);
               setState(() {});
             },

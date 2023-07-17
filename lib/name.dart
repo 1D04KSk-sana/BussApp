@@ -3,9 +3,14 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
 class Name {
-  List<String> StartDestinationNameGet(int count) {
-    List<String> startDestinationName = [];
+  List<String> startDestinationName = [];
 
+  void _NameClear() {
+    startDestinationName.clear();
+  }
+
+  List<String> StartDestinationNameGet(int count) {
+    _NameClear();
     if (count == 1) {
       //10
       startDestinationName = ["守口車庫前", "天満橋"];
