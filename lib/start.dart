@@ -3,6 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import './number.dart';
 import './name.dart';
+import './marker.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({Key? key}) : super(key: key);
@@ -17,6 +18,7 @@ class _StartPageState extends State<StartPage> {
   late GoogleMapController mapController;
 
   final Set<Polyline> _polyline = {};
+  final Set<Marker> _marker = {};
 
   Number number = Number();
   Name name = Name();
@@ -45,6 +47,24 @@ class _StartPageState extends State<StartPage> {
   @override
   void initState() {
     super.initState();
+  }
+
+  void SetMarkerPoints(int count) {
+    _marker.add(
+      Marker(
+        markerId: const MarkerId("origin"),
+        position: startPoints[count],
+        infoWindow: InfoWindow(title: startDestinationName[0]),
+      ),
+    );
+    _marker.add(
+      Marker(
+        markerId: const MarkerId("destination"),
+        position: destinationPoints[count],
+        infoWindow: InfoWindow(title: startDestinationName[1]),
+      ),
+    );
+    _marker.addAll(GetMarkerPoints(count));
   }
 
 // ルート表示データ取得
@@ -84,17 +104,7 @@ class _StartPageState extends State<StartPage> {
         initialCameraPosition: CameraPosition(target: start, zoom: 13),
         zoomControlsEnabled: false,
         polylines: _polyline,
-        markers: {
-          Marker(
-            markerId: const MarkerId("origin"),
-            position: startPoints[count],
-            infoWindow: InfoWindow(title: startDestinationName[0]),
-          ),
-          Marker(
-              markerId: const MarkerId("destination"),
-              position: destinationPoints[count],
-              infoWindow: InfoWindow(title: startDestinationName[1]))
-        },
+        markers: _marker,
         minMaxZoomPreference: MinMaxZoomPreference(11, 20),
       );
     }
@@ -124,6 +134,7 @@ class _StartPageState extends State<StartPage> {
               drawerCount = 1;
               startDestinationName = name.StartDestinationNameGet(count);
               _getRoutes(count);
+              SetMarkerPoints(count);
               setState(() {});
             },
           ),
