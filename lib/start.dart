@@ -50,6 +50,7 @@ class _StartPageState extends State<StartPage> {
   }
 
   void SetMarkerPoints(int count) {
+    _marker.clear();
     _marker.add(
       Marker(
         markerId: const MarkerId("origin"),
@@ -147,6 +148,7 @@ class _StartPageState extends State<StartPage> {
               drawerCount = 1;
               startDestinationName = name.StartDestinationNameGet(count);
               _getRoutes(count);
+              SetMarkerPoints(count);
               setState(() {});
             },
           ),
@@ -159,6 +161,7 @@ class _StartPageState extends State<StartPage> {
               drawerCount = 1;
               startDestinationName = name.StartDestinationNameGet(count);
               _getRoutes(count);
+              SetMarkerPoints(count);
               setState(() {});
             },
           ),
@@ -171,6 +174,7 @@ class _StartPageState extends State<StartPage> {
               drawerCount = 1;
               startDestinationName = name.StartDestinationNameGet(count);
               _getRoutes(count);
+              SetMarkerPoints(count);
               setState(() {});
             },
           ),
@@ -183,6 +187,7 @@ class _StartPageState extends State<StartPage> {
               drawerCount = 1;
               startDestinationName = name.StartDestinationNameGet(count);
               _getRoutes(count);
+              SetMarkerPoints(count);
               setState(() {});
             },
           ),
@@ -195,6 +200,7 @@ class _StartPageState extends State<StartPage> {
               drawerCount = 1;
               startDestinationName = name.StartDestinationNameGet(count);
               _getRoutes(count);
+              SetMarkerPoints(count);
               setState(() {});
             },
           ),
@@ -207,6 +213,7 @@ class _StartPageState extends State<StartPage> {
               drawerCount = 1;
               startDestinationName = name.StartDestinationNameGet(count);
               _getRoutes(count);
+              SetMarkerPoints(count);
               setState(() {});
             },
           ),
@@ -219,6 +226,7 @@ class _StartPageState extends State<StartPage> {
               drawerCount = 1;
               startDestinationName = name.StartDestinationNameGet(count);
               _getRoutes(count);
+              SetMarkerPoints(count);
               setState(() {});
             },
           ),
@@ -231,6 +239,7 @@ class _StartPageState extends State<StartPage> {
               drawerCount = 1;
               startDestinationName = name.StartDestinationNameGet(count);
               _getRoutes(count);
+              SetMarkerPoints(count);
               setState(() {});
             },
           ),
@@ -243,6 +252,7 @@ class _StartPageState extends State<StartPage> {
               drawerCount = 1;
               startDestinationName = name.StartDestinationNameGet(count);
               _getRoutes(count);
+              SetMarkerPoints(count);
               setState(() {});
             },
           )
