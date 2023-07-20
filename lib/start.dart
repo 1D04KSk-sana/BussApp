@@ -124,7 +124,7 @@ class _StartPageState extends State<StartPage> {
               height: 60,
               child: DrawerHeader(
                 decoration: BoxDecoration(color: Colors.green.withOpacity(0.8)),
-                child: const Text('メニュー'),
+                child: const Text('路線を選んでね！'),
               )),
           ListTile(
             title: Text("10番線"),
@@ -269,7 +269,7 @@ class _StartPageState extends State<StartPage> {
                 child: DrawerHeader(
                   decoration:
                       BoxDecoration(color: Colors.green.withOpacity(0.8)),
-                  child: const Text('メニュー'),
+                  child: const Text('元のマップに戻る？'),
                 )),
             ListTile(
               title: Text("戻る"),
