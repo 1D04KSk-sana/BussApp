@@ -13,7 +13,7 @@ class StartPage extends StatefulWidget {
 }
 
 class _StartPageState extends State<StartPage> {
-  static const String API_KYE = "APIキー";
+  static const String API_KYE = "AIzaSyD4jKa8v1-_3D-jbUYtJv9pqF6BmDv_iHI";
 
   late GoogleMapController mapController;
 
